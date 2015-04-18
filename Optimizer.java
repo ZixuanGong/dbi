@@ -28,6 +28,14 @@ public class Optimizer {
         for (int i = 0; i < A.length; i++) {
         	for (int j = 0; j < i; j ++) {
         		
+        		if (compareCMetric(A[i], A[j])) {
+        			
+        		} else if (compareDMetric(A[i], A[j])) {
+        			
+        		} else {
+        			
+        		}
+        		
         	}
         }
 

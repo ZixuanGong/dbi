@@ -44,14 +44,11 @@ public class Optimizer {
         				A[mask_left | mask_right].c = cost;
         				A[mask_left | mask_right].L = j;
         				A[mask_left | mask_right].R = i;
-        			}
-        			
-        		}
-        		
+        			}	
+        		}		
         	}
         }
-
-
+        return A;
     }
 
     private Record[] genAllSubsets(Double[] S) {
@@ -121,8 +118,8 @@ public class Optimizer {
 
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
             for (Double[] set: query_sets) {
-                /* plan= */optimizer.plan(set);
-
+            	Record[] plan = optimizer.plan(set);
+            	
 
                 println("=============");
                 println(Arrays.toString(set));

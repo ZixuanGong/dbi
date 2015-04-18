@@ -25,6 +25,11 @@ public class Optimizer {
 
     private /* return type */ void plan(Double[] S) {
         Record A[] = genAllSubsets(S);
+        for (int i = 0; i < A.length; i++) {
+        	for (int j = 0; j < i; j ++) {
+        		
+        	}
+        }
 
 
     }
@@ -54,16 +59,22 @@ public class Optimizer {
                 cost = br_and_cost;
                 no_branch = true;
             }
+            double p = 1
+            for (double sel: subset) {
+            	p *= sel
+            }
 
-            Record r = new Record(subset.size(), );
+            Record r = new Record(subset.size(), p, no_branch, cost);
+            ret[i] = r
         }
         return ret;
     }
 
     private double logicAndCost(ArrayList<Double> subset) {
         double p = 1;   // product of all selectivities
-        for (double sel: subset)
+        for (double sel: subset) {
             p *= sel;
+        }
 
         double q = p<=0.5 ? p : 1-p;
         int k = subset.size();

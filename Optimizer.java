@@ -77,6 +77,10 @@ public class Optimizer {
 
     public static void main(String[] args) {
         /* read in query.txt and config.txt */
+    	if (args.length != 2) {
+    		System.out.println("Need two Parameters and get one instead");
+    		System.exit(-1);
+    	}
         try {
 
             Properties config = new Properties();

@@ -1,3 +1,5 @@
+package dbi;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -5,18 +7,72 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Properties;
 
+import javax.xml.namespace.QName;
+
 public class Optimizer {
-    Properties config;
+    double r,t,l,m,a,f;
 
     public Optimizer(Properties config) {
-        this.config = config;
+        r = Double.parseDouble(config.getProperty("r"));
+        t = Double.parseDouble(config.getProperty("t"));
+        l = Double.parseDouble(config.getProperty("l"));
+        m = Double.parseDouble(config.getProperty("m"));
+        a = Double.parseDouble(config.getProperty("a"));
+        f = Double.parseDouble(config.getProperty("f"));
     }
 
-    private /* return type */ void plan(Double[] query) {
+    private /* return type */ void plan(Double[] S) {
+        Record A[] = genAllSubsets(S);
 
+
+    }
+
+    private Record[] genAllSubsets(Double[] S) {
+        int k = S.length;
+        int num_subsets = (int) (Math.pow(2, k) - 1);
+        Record ret[] = new Record[num_subsets];
+
+        for (int i=0; i<ret.length; i++) {
+            ArrayList<Double> subset = new ArrayList<Double>();
+
+            // Add basic terms to a subset
+            // e.g. if k=4, mask=(dec)2=(bin)0010, then create a subset for S[3]
+            int mask = i+1;
+            for (int j=0; j<k; j++) {
+                /* j: index of basic term */
+                int bit = (mask >> (k-j-1)) & 1;
+                if (bit == 1) {
+                    subset.add(S[j]);
+                }
+            }
+            boolean no_branch = false;
+            double cost = logicAndCost(subset);
+            double br_and_cost = noBranchAndCost(subset);
+            if (br_and_cost < cost) {
+                cost = br_and_cost;
+                no_branch = true;
+            }
+
+            Record r = new Record(subset.size(), );
+        }
+        return ret;
+    }
+
+    private double logicAndCost(ArrayList<Double> subset) {
+        double p = 1;   // product of all selectivities
+        for (double sel: subset)
+            p *= sel;
+
+        double q = p<=0.5 ? p : 1-p;
+        int k = subset.size();
+        return k*r + (k-1)*l + f*k + t + m*q + p*a;
+    }
+
+    private double noBranchAndCost(ArrayList<Double> subset) {
+        int k = subset.size();
+        return k*r + (k-1)*l + f*k + a;
     }
 
     public static void main(String[] args) {
@@ -50,7 +106,7 @@ public class Optimizer {
     }
 
     private static ArrayList<Double[]> loadQueryFile(String filename) throws IOException {
-        ArrayList<Double[]> ret = new ArrayList<>();
+        ArrayList<Double[]> ret = new ArrayList<Double[]>();
 
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String query = br.readLine();

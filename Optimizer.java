@@ -27,12 +27,24 @@ public class Optimizer {
         Record A[] = genAllSubsets(S);
         for (int i = 0; i < A.length; i++) {
         	for (int j = 0; j < i; j ++) {
-        		
+        		int mask_right = i + 1;
+        		int mask_left = j + 1;
+        		if (mask_left & mask_right != 0) {
+        			continue;
+        		}
         		if (compareCMetric(A[i], A[j])) {
         			
         		} else if (compareDMetric(A[i], A[j])) {
         			
         		} else {
+        			double p = A[i].p;
+        			double q = p<=0.5 ? p : 1-p;
+        			double cost = A[i].c + m*q + p*A[j].c;
+        			if (cost < A[mask_left | mask_right].c) {
+        				A[mask_left | mask_right].c = cost;
+        				A[mask_left | mask_right].L = j;
+        				A[mask_left | mask_right].R = i;
+        			}
         			
         		}
         		
@@ -67,13 +79,13 @@ public class Optimizer {
                 cost = br_and_cost;
                 no_branch = true;
             }
-            double p = 1
+            double p = 1;
             for (double sel: subset) {
-            	p *= sel
+            	p *= sel;
             }
 
             Record r = new Record(subset.size(), p, no_branch, cost);
-            ret[i] = r
+            ret[i] = r;
         }
         return ret;
     }

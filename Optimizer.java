@@ -23,7 +23,7 @@ public class Optimizer {
         f = Double.parseDouble(config.getProperty("f"));
     }
 
-    private /* return type */ void plan(Double[] S) {
+    private Record[] plan(Double[] S) {
         Record A[] = genAllSubsets(S);
         for (int i = 0; i < A.length; i++) {
             for (int j = 0; j < A.length; j++) {
@@ -36,20 +36,24 @@ public class Optimizer {
                     || suboptimalByDMetric(A[i], A[j])) {
                     // suboptimal -> skip
                 } else {
-                    double c = getCostForCombinedPlan(A[i], A[j]);
-                    double p = A[i].p;
-                    double q = p<=0.5 ? p : 1-p;
-                    double cost = A[i].c + m*q + p*A[j].c;
-                    if (cost < A[mask_left | mask_right].c) {
-                        A[mask_left | mask_right].c = cost;
-                        A[mask_left | mask_right].L = j;
-                        A[mask_left | mask_right].R = i;
+                    double cost = getCostForCombinedPlan(A[i], A[j]);
+                    int combinedIdx = (mask_left | mask_right) - 1;
+
+                    if (cost < A[combinedIdx].c) {
+                        A[combinedIdx].c = cost;
+                        A[combinedIdx].L = j;
+                        A[combinedIdx].R = i;
                     }
                 }
-
             }
         }
         return A;
+    }
+
+    private double getCostForCombinedPlan(Record left, Record right) {
+        double p = left.p;
+        double q = p<=0.5 ? p : 1-p;
+        return getFcost(left) + m*q + p*right.c;
     }
 
     private boolean suboptimalByCMetric(Record left, Record right) {

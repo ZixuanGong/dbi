@@ -1,4 +1,4 @@
-package dbi;
+// package dbi;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -26,32 +26,53 @@ public class Optimizer {
     private /* return type */ void plan(Double[] S) {
         Record A[] = genAllSubsets(S);
         for (int i = 0; i < A.length; i++) {
-        	for (int j = 0; j < i; j ++) {
-        		int mask_right = i + 1;
-        		int mask_left = j + 1;
-        		if (mask_left & mask_right != 0) {
-        			continue;
-        		}
-        		if (compareCMetric(A[i], A[j])) {
-        			
-        		} else if (compareDMetric(A[i], A[j])) {
-        			
-        		} else {
-        			double p = A[i].p;
-        			double q = p<=0.5 ? p : 1-p;
-        			double cost = A[i].c + m*q + p*A[j].c;
-        			if (cost < A[mask_left | mask_right].c) {
-        				A[mask_left | mask_right].c = cost;
-        				A[mask_left | mask_right].L = j;
-        				A[mask_left | mask_right].R = i;
-        			}
-        			
-        		}
-        		
-        	}
+            for (int j = 0; j < A.length; j++) {
+                int mask_right = i + 1;
+                int mask_left = j + 1;
+                if ((mask_left & mask_right) != 0) {
+                    continue;
+                }
+                if (suboptimalByCMetric(A[i], A[j])
+                    || suboptimalByDMetric(A[i], A[j])) {
+                    // suboptimal -> skip
+                } else {
+                    double c = getCostForCombinedPlan(A[i], A[j]);
+                    double p = A[i].p;
+                    double q = p<=0.5 ? p : 1-p;
+                    double cost = A[i].c + m*q + p*A[j].c;
+                    if (cost < A[mask_left | mask_right].c) {
+                        A[mask_left | mask_right].c = cost;
+                        A[mask_left | mask_right].L = j;
+                        A[mask_left | mask_right].R = i;
+                    }
+                }
+
+            }
         }
 
 
+    }
+
+    private boolean suboptimalByCMetric(Record left, Record right) {
+        double r_cmetric = (right.p - 1)/getFcost(right);
+        double l_cmetric = (left.p - 1)/getFcost(left);
+
+        if (left.p<=0.5 && right.p<=left.p && r_cmetric<l_cmetric)
+            return true;
+        else
+            return false;
+    }
+
+    private boolean suboptimalByDMetric(Record left, Record right) {
+        if (right.p < left.p && getFcost(right) < getFcost(left))
+            return true;
+        else
+            return false;
+    }
+
+    private double getFcost(Record rec) {
+        int k = rec.n;
+        return k*r + (k-1)*l + f*k + t;
     }
 
     private Record[] genAllSubsets(Double[] S) {

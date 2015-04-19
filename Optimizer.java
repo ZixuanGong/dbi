@@ -73,15 +73,15 @@ public class Optimizer {
                 }
             }
             boolean no_branch = false;
-            double cost = logicAndCost(subset);
-            double br_and_cost = noBranchAndCost(subset);
-            if (br_and_cost < cost) {
-                cost = br_and_cost;
+            double cost = getLogicAndCost(subset);
+            double no_branch_cost = getNoBranchCost(subset);
+            if (no_branch_cost < cost) {
+                cost = no_branch_cost;
                 no_branch = true;
             }
             double p = 1;
             for (double sel: subset) {
-            	p *= sel;
+                p *= sel;
             }
 
             Record r = new Record(subset.size(), p, no_branch, cost);
@@ -90,7 +90,7 @@ public class Optimizer {
         return ret;
     }
 
-    private double logicAndCost(ArrayList<Double> subset) {
+    private double getLogicAndCost(ArrayList<Double> subset) {
         double p = 1;   // product of all selectivities
         for (double sel: subset) {
             p *= sel;
@@ -101,7 +101,7 @@ public class Optimizer {
         return k*r + (k-1)*l + f*k + t + m*q + p*a;
     }
 
-    private double noBranchAndCost(ArrayList<Double> subset) {
+    private double getNoBranchCost(ArrayList<Double> subset) {
         int k = subset.size();
         return k*r + (k-1)*l + f*k + a;
     }

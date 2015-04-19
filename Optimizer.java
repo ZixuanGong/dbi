@@ -49,8 +49,7 @@ public class Optimizer {
 
             }
         }
-
-
+        return A;
     }
 
     private boolean suboptimalByCMetric(Record left, Record right) {
@@ -142,13 +141,13 @@ public class Optimizer {
 
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
             for (Double[] set: query_sets) {
-                /* plan= */optimizer.plan(set);
+            	Record[] plan = optimizer.plan(set);
 
 
                 println("=============");
                 println(Arrays.toString(set));
                 println("-------------");
-                /* println(genCodeForPlan(plan)); */
+                println(produceCode(plan));
                 println("-------------");
                 println("cost: " /* + cost */);
             }
@@ -159,6 +158,14 @@ public class Optimizer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String produceCode(Record[] plan) {
+    	StringBuffer ifCode = new StringBuffer();
+    	StringBuffer branchCode = new StringBuffer();
+    	ifCode.append("if (");
+
+
     }
 
     private static ArrayList<Double[]> loadQueryFile(String filename) throws IOException {

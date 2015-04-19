@@ -124,7 +124,7 @@ public class Optimizer {
                 println("=============");
                 println(Arrays.toString(set));
                 println("-------------");
-                /* println(genCodeForPlan(plan)); */
+                println(produceCode(plan));
                 println("-------------");
                 println("cost: " /* + cost */);
             }
@@ -135,6 +135,14 @@ public class Optimizer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    private static String produceCode(Record[] plan) {
+    	StringBuffer ifCode = new StringBuffer();
+    	StringBuffer branchCode = new StringBuffer();
+    	ifCode.append("if (");
+    	
+    	
     }
 
     private static ArrayList<Double[]> loadQueryFile(String filename) throws IOException {

@@ -26,7 +26,7 @@ public class Optimizer {
     private /* return type */ void plan(Double[] S) {
         Record A[] = genAllSubsets(S);
         for (int i = 0; i < A.length; i++) {
-        	for (int j = 0; j < i; j ++) {
+        	for (int j = 0; j < A.length; j ++) {
         		int mask_right = i + 1;
         		int mask_left = j + 1;
         		if (mask_left & mask_right != 0) {
@@ -110,7 +110,6 @@ public class Optimizer {
     		System.exit(-1);
     	}
         try {
-
             Properties config = new Properties();
             config.load(new FileInputStream(args[1]));
 
@@ -118,13 +117,11 @@ public class Optimizer {
 
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
             for (Double[] set: query_sets) {
-            	Record[] plan = optimizer.plan(set);
-            	
-
+            	Record[] plan = optimizer.plan(set); 
                 println("=============");
                 println(Arrays.toString(set));
                 println("-------------");
-                println(produceCode(plan));
+                //println(produceCode(plan));
                 println("-------------");
                 println("cost: " /* + cost */);
             }
@@ -138,12 +135,18 @@ public class Optimizer {
     }
     
     private static String produceCode(Record[] plan) {
-    	StringBuffer ifCode = new StringBuffer();
-    	StringBuffer branchCode = new StringBuffer();
-    	ifCode.append("if (");
-    	
-    	
+    	String ifCode = "";
+    	String branchCode = "";
+        ArrayList<Integer> = getComponents(plan, plan.length-1)
     }
+
+    private static ArrayList<Integer> getComponents(Record[] plan, int index) {
+        if (plan.L == -1) {
+            if (plan.b == )
+        } 
+    }
+
+
 
     private static ArrayList<Double[]> loadQueryFile(String filename) throws IOException {
         ArrayList<Double[]> ret = new ArrayList<Double[]>();

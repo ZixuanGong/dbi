@@ -1,0 +1,747 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"p",
+				"print"
+			],
+			[
+				"new",
+				"new_start〔variable〕"
+			],
+			[
+				"m",
+				"mend"
+			],
+			[
+				"ch",
+				"charSet〔variable〕"
+			],
+			[
+				"val",
+				"valid_right"
+			],
+			[
+				"high",
+				"high_left〔variable〕"
+			],
+			[
+				"hi",
+				"hight_right〔variable〕"
+			],
+			[
+				"va",
+				"valid_left〔variable〕"
+			],
+			[
+				"low",
+				"low_left〔variable〕"
+			],
+			[
+				"valid",
+				"valid_right〔variable〕"
+			],
+			[
+				"he",
+				"heapify〔module〕"
+			],
+			[
+				"hea",
+				"heap〔variable〕"
+			],
+			[
+				"max",
+				"maxBit〔variable〕"
+			],
+			[
+				"s",
+				"spath"
+			],
+			[
+				"pa",
+				"path〔argument〕"
+			],
+			[
+				"dir",
+				"direct"
+			],
+			[
+				"di",
+				"direct〔variable〕"
+			],
+			[
+				"cm",
+				"cmpEnd〔variable〕"
+			],
+			[
+				"heap",
+				"heappop〔module〕"
+			],
+			[
+				"node",
+				"nodes〔argument〕"
+			],
+			[
+				"Unin",
+				"UndirectedGraphNode〔class〕"
+			],
+			[
+				"head",
+				"headB〔argument〕"
+			],
+			[
+				"coun",
+				"countB〔variable〕"
+			],
+			[
+				"qu",
+				"quoram〔variable〕"
+			],
+			[
+				"prev_",
+				"prev_min"
+			],
+			[
+				"pre",
+				"prev_max"
+			],
+			[
+				"prev",
+				"prev_min"
+			],
+			[
+				"min",
+				"minMax〔variable〕"
+			],
+			[
+				"un",
+				"unique〔variable〕"
+			],
+			[
+				"ma",
+				"maxi〔variable〕"
+			],
+			[
+				"gl",
+				"global_min"
+			],
+			[
+				"glo",
+				"global_min〔variable〕"
+			],
+			[
+				"ban",
+				"ban_list〔argument〕"
+			],
+			[
+				"pop",
+				"popleft〔function〕"
+			],
+			[
+				"b",
+				"ban_list"
+			],
+			[
+				"ba",
+				"ban_list"
+			],
+			[
+				"en",
+				"end_x"
+			],
+			[
+				"end",
+				"end_y"
+			],
+			[
+				"grid",
+				"grid1〔variable〕"
+			],
+			[
+				"is",
+				"island〔variable〕"
+			],
+			[
+				"righ",
+				"right_lvl〔variable〕"
+			],
+			[
+				"lev",
+				"left_lvl〔variable〕"
+			],
+			[
+				"le",
+				"left_lvl〔variable〕"
+			],
+			[
+				"Tr",
+				"TreeNode〔class〕"
+			],
+			[
+				"ri",
+				"right"
+			],
+			[
+				"su",
+				"sum_root〔variable〕"
+			],
+			[
+				"lef",
+				"left_sum"
+			],
+			[
+				"rig",
+				"right_lvl〔variable〕"
+			],
+			[
+				"median",
+				"median"
+			],
+			[
+				"med",
+				"median"
+			],
+			[
+				"medi",
+				"medianMin"
+			],
+			[
+				"in",
+				"insert〔function〕"
+			],
+			[
+				"pp",
+				"popleft〔function〕"
+			],
+			[
+				"nod",
+				"nodes〔variable〕"
+			],
+			[
+				"ha",
+				"haystack〔argument〕"
+			],
+			[
+				"mid_",
+				"mid_node〔variable〕"
+			],
+			[
+				"ret",
+				"return〔keyword〕"
+			],
+			[
+				"de",
+				"deque〔class〕"
+			],
+			[
+				"num",
+				"num_single〔variable〕"
+			],
+			[
+				"po",
+				"popleft〔function〕"
+			],
+			[
+				"count",
+				"count_equal〔variable〕"
+			],
+			[
+				"mid",
+				"mid_length〔variable〕"
+			],
+			[
+				"sort",
+				"sortList"
+			],
+			[
+				"inorder",
+				"inorder_right"
+			],
+			[
+				"postorder",
+				"postorder_left"
+			],
+			[
+				"inor",
+				"inorder_left〔variable〕"
+			],
+			[
+				"ino",
+				"inorder〔argument〕"
+			],
+			[
+				"pos",
+				"postorder_right〔variable〕"
+			],
+			[
+				"ne",
+				"new_end"
+			],
+			[
+				"read",
+				"readline〔function〕"
+			],
+			[
+				"com",
+				"completion〔variable〕"
+			],
+			[
+				"len",
+				"length〔variable〕"
+			],
+			[
+				"re",
+				"readline〔function〕"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				"Syntax Check"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "ins",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"pk inst",
+				"Package Control: Install Package"
+			],
+			[
+				"code",
+				"Code Folding: Unfold All"
+			]
+		],
+		"width": 507.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Alex/Documents/DB_implementation/dbi/.project",
+		"/Users/Alex/Documents/DB_implementation/dbi/.classpath",
+		"/Users/Alex/Documents/DB_implementation/dbi/branch_mispred.c",
+		"/Users/Alex/Documents/Compiler/Lessa/src/lessa/Main.java",
+		"/Users/Alex/Desktop/Main.java",
+		"/Users/Alex/OneDrive/Documents/isMatch.py",
+		"/Users/Alex/OneDrive/Documents/minWindow.py",
+		"/Users/Alex/OneDrive/Documents/house_rob.py",
+		"/Users/Alex/OneDrive/Documents/flat_tree.py",
+		"/Users/Alex/OneDrive/Documents/maxProfit.py",
+		"/Users/Alex/OneDrive/Documents/isValidBST.py",
+		"/Users/Alex/OneDrive/Documents/search.py",
+		"/Users/Alex/OneDrive/Documents/is_palan.py",
+		"/Users/Alex/OneDrive/Documents/mergeKLists.py",
+		"/Users/Alex/OneDrive/Documents/numDecodings.py",
+		"/Users/Alex/OneDrive/Documents/sortColors.py",
+		"/Users/Alex/OneDrive/Documents/addBinary.py",
+		"/Users/Alex/OneDrive/Documents/minimumTotal.py",
+		"/Users/Alex/OneDrive/Documents/partition.py",
+		"/Users/Alex/OneDrive/Documents/largest_num.py",
+		"/Users/Alex/OneDrive/Documents/numTrees.py",
+		"/Users/Alex/OneDrive/Documents/hasCycle.py",
+		"/Users/Alex/OneDrive/Documents/simplifyPath.py",
+		"/Users/Alex/OneDrive/Documents/maxProfit2.py",
+		"/Users/Alex/OneDrive/Documents/getRow.py",
+		"/Users/Alex/OneDrive/Documents/reverseBits.py",
+		"/Users/Alex/OneDrive/Documents/rangeBitwiseAnd.py",
+		"/Users/Alex/Documents/test_files/test.py",
+		"/Users/Alex/OneDrive/Documents/rotate.py",
+		"/Users/Alex/OneDrive/Documents/countAndSay.py",
+		"/Users/Alex/OneDrive/Documents/ladderLength.py",
+		"/Users/Alex/OneDrive/Documents/cloneGraph.py",
+		"/Users/Alex/OneDrive/Documents/letterCombinations.py",
+		"/Users/Alex/OneDrive/Documents/reverseWords.py",
+		"/Users/Alex/OneDrive/Documents/findPeakElement.py",
+		"/Users/Alex/OneDrive/Documents/getIntersectionNode.py",
+		"/Users/Alex/OneDrive/Documents/canCompleteCircuit.py",
+		"/Users/Alex/OneDrive/Documents/isValid.py",
+		"/Users/Alex/OneDrive/Documents/valid_parent.py",
+		"/Users/Alex/Documents/DB_implementation/project2/template/branch_mispred.c",
+		"/Users/Alex/Downloads/project2/template/Makefile",
+		"/Users/Alex/Documents/Compiler/Lessa/Expr.g4",
+		"/Users/Alex/Documents/Compiler/Lessa/Python3.g4",
+		"/Users/Alex/git/python3-parser/src/main/antlr4/nl/bigo/pythonparser/Python3.g4",
+		"/Users/Alex/git/python3-parser/src/main/antlr4/nl/bigo/pythonparser/Python34.g4",
+		"/Users/Alex/git/python3-parser/src/main/antlr4/nl/bigo/pythonparser/Expr.g4",
+		"/Users/Alex/Documents/Compiler/Lessa/build",
+		"/Users/Alex/Documents/Compiler/Lessa/clean",
+		"/Users/Alex/OneDrive/Documents/isMatch2.py",
+		"/Users/Alex/OneDrive/Documents/nextPermutation.py",
+		"/Users/Alex/OneDrive/Documents/permute.py",
+		"/Users/Alex/OneDrive/Documents/permuteUnique.py",
+		"/Users/Alex/OneDrive/Documents/reverseBetween.py",
+		"/Users/Alex/OneDrive/Documents/solve.py",
+		"/Users/Alex/OneDrive/Documents/numIslands.py",
+		"/Users/Alex/OneDrive/Documents/dial_pad.py",
+		"/Users/Alex/OneDrive/Documents/postorderTraversal.py",
+		"/Users/Alex/OneDrive/Documents/climbStairs.py",
+		"/Users/Alex/OneDrive/Documents/maximumGap.py",
+		"/Users/Alex/OneDrive/Documents/sumNumbers.py",
+		"/Users/Alex/OneDrive/Documents/singleNumber2-revised.py",
+		"/Users/Alex/OneDrive/Documents/wordBreak.py",
+		"/Users/Alex/OneDrive/Documents/findMin.py",
+		"/Users/Alex/OneDrive/Documents/levelOrderBottom.py",
+		"/Users/Alex/OneDrive/Documents/strStr.py",
+		"/Users/Alex/OneDrive/Documents/majorityElement.py",
+		"/Users/Alex/OneDrive/Documents/sortedListToBST.py",
+		"/Users/Alex/OneDrive/Documents/minDepth.py",
+		"/Users/Alex/OneDrive/Documents/anagrams.py",
+		"/Users/Alex/OneDrive/Documents/searchRange.py",
+		"/Users/Alex/OneDrive/Documents/remove_element.py",
+		"/Users/Alex/OneDrive/Documents/remove_dup.py",
+		"/Users/Alex/OneDrive/Documents/long_panlan_string.py",
+		"/Users/Alex/OneDrive/Documents/tree_zigzag.py",
+		"/Users/Alex/OneDrive/Documents/sort_linked_list.py",
+		"/Users/Alex/OneDrive/Documents/right_side_tree.py",
+		"/Users/Alex/OneDrive/Documents/3sum.py",
+		"/Users/Alex/OneDrive/Documents/merge_2_list.py",
+		"/Users/Alex/OneDrive/Documents/sort_linked_list_qsort.py",
+		"/Users/Alex/OneDrive/Documents/preoder_inorder.py",
+		"/Users/Alex/OneDrive/Documents/inorder_construction.py",
+		"/Users/Alex/.zshrc",
+		"/Users/Alex/Documents/compiler/python3-parser/README.md",
+		"/Users/Alex/apache-maven-3.2.5/README.txt",
+		"/Users/Alex/Documents/Algorithm/assignment1",
+		"/Users/Alex/Documents/Algorithm/assignment1.2",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/User/SublimeCodeIntel.sublime-settings",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/Alex/Desktop/get-pip.py",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/Alex/OneDrive/Documents/word_search.py",
+		"/Users/Alex/OneDrive/Documents/reverse_bits.py",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/Users/Alex/OneDrive/Documents/test.py",
+		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings"
+	],
+	"find":
+	{
+		"height": 30.0
+	},
+	"find_in_files":
+	{
+		"height": 101.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"temp",
+			"letter",
+			"actualRow",
+			"previousRow",
+			"lexer",
+			"DEF",
+			"funcdef",
+			"node"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 241.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "Optimizer.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ism",
+				"isMatch.py"
+			],
+			[
+				"min",
+				"minWindow.py"
+			],
+			[
+				"mer",
+				"mergeKLists.py"
+			],
+			[
+				"pro",
+				"maxProfit.py"
+			],
+			[
+				"val",
+				"isValidBST.py"
+			],
+			[
+				"se",
+				"search.py"
+			],
+			[
+				"dec",
+				"numDecodings.py"
+			],
+			[
+				"add",
+				"addBinary.py"
+			],
+			[
+				"ispa",
+				"is_palan.py"
+			],
+			[
+				"sort",
+				"sortColors.py"
+			],
+			[
+				"deco",
+				"numDecodings.py"
+			],
+			[
+				"ho",
+				"house_rob.py"
+			],
+			[
+				"fa",
+				"flat_tree.py"
+			],
+			[
+				"fal",
+				"flat_tree.py"
+			],
+			[
+				"sear",
+				"search.py"
+			],
+			[
+				"par",
+				"partition.py"
+			],
+			[
+				"lar",
+				"largest_num.py"
+			],
+			[
+				"num",
+				"numTrees.py"
+			],
+			[
+				"isv",
+				"isValidBST.py"
+			],
+			[
+				"max",
+				"maxProfit2.py"
+			],
+			[
+				"pan",
+				"is_palan.py"
+			],
+			[
+				"rever",
+				"reverseBits.py"
+			],
+			[
+				"coun",
+				"countAndSay.py"
+			],
+			[
+				"la",
+				"ladderLength.py"
+			],
+			[
+				"let",
+				"letterCombinations.py"
+			],
+			[
+				"cl",
+				"cloneGraph.py"
+			],
+			[
+				"clone",
+				"cloneGraph.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

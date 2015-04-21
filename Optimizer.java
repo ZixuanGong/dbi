@@ -165,13 +165,13 @@ public class Optimizer {
     private static String produceCode(Record[] plan, int k) {
     	String ifCode = "";
     	String noBranchCode = "";
-        ArrayList<String> code = new ArrayList<string>();
+        ArrayList<String> code = new ArrayList<String>();
         code.add(ifCode);
         code.add(noBranchCode);
         getComponents(code, plan, plan.length-1, k);
         code.set(0, "if(" + code.get(0) + "){\n");
-        if (code.get(1).length() == 0) {
-            code.set(1, "\tanswer[j] = i;\n\tj += (" + noBranchCode + ");\n");
+        if (code.get(1).length() != 0) {
+            code.set(1, "\tanswer[j] = i;\n\tj += (" + code.get(1) + ");\n");
         } else {
             code.set(1, "\tanswer[j++] = i;");
         }
@@ -186,7 +186,7 @@ public class Optimizer {
     private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {     
         if (plan[pos].L == -1) {
             ArrayList<Integer> indexes = getIndex(pos, k);
-            str = ""
+            String str = "";
             for (int i: indexes) {
                 if (str.length()>0) {
                     str += "&";
@@ -208,8 +208,8 @@ public class Optimizer {
                 ifCode += "(" + str + ")";
                 code.set(0, ifCode);
             }
-            getComponents(plan, plan[pos].L, k);
-            getComponents(plan, plan[pos].R, k);
+            getComponents(code, plan, plan[pos].L, k);
+            getComponents(code, plan, plan[pos].R, k);
 
         } 
     }
@@ -225,7 +225,7 @@ public class Optimizer {
         for (int j=0; j<k; j++) {
             int bit = (mask >> (k-j-1)) & 1;
             if (bit == 1) {
-               indexes.add(j) 
+               indexes.add(j);
             }
         }
         return indexes;

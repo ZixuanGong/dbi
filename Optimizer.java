@@ -26,29 +26,6 @@ public class Optimizer {
     private Record[] plan(Double[] S) {
         Record A[] = genAllSubsets(S);
         for (int i = 0; i < A.length; i++) {
-<<<<<<< HEAD
-        	for (int j = 0; j < A.length; j ++) {
-        		int mask_right = i + 1;
-        		int mask_left = j + 1;
-        		if (mask_left & mask_right != 0) {
-        			continue;
-        		}
-        		if (compareCMetric(A[i], A[j])) {
-        			
-        		} else if (compareDMetric(A[i], A[j])) {
-        			
-        		} else {
-        			double p = A[i].p;
-        			double q = p<=0.5 ? p : 1-p;
-        			double cost = A[i].c + m*q + p*A[j].c;
-        			if (cost < A[mask_left | mask_right].c) {
-        				A[mask_left | mask_right].c = cost;
-        				A[mask_left | mask_right].L = j;
-        				A[mask_left | mask_right].R = i;
-        			}	
-        		}		
-        	}
-=======
             for (int j = 0; j < A.length; j++) {
                 int mask_right = i + 1;
                 int mask_left = j + 1;
@@ -69,7 +46,6 @@ public class Optimizer {
                     }
                 }
             }
->>>>>>> a3ccf4f5b18284d3f0c7cc5877bb63e4e8d770f2
         }
         return A;
     }
@@ -173,7 +149,7 @@ public class Optimizer {
                 println("=============");
                 println(Arrays.toString(set));
                 println("-------------");
-                //println(produceCode(plan));
+                println(produceCode(plan, set.length));
                 println("-------------");
                 println("cost: " /* + cost */);
             }
@@ -186,18 +162,74 @@ public class Optimizer {
         }
     }
 
-    private static String produceCode(Record[] plan) {
+    private static String produceCode(Record[] plan, int k) {
     	String ifCode = "";
-    	String branchCode = "";
-        ArrayList<String> = getComponents(plan, plan.length-1)
+    	String noBranchCode = "";
+        ArrayList<String> code = new ArrayList<string>();
+        code.add(ifCode);
+        code.add(noBranchCode);
+        getComponents(code, plan, plan.length-1, k);
+        code.set(0, "if(" + code.get(0) + "){\n");
+        if (code.get(1).length() == 0) {
+            code.set(1, "\tanswer[j] = i;\n\tj += (" + noBranchCode + ");\n");
+        } else {
+            code.set(1, "\tanswer[j++] = i;");
+        }
+        code.add("}\n");
+        StringBuffer ret = new StringBuffer();
+        for (String str: code) {
+            ret.append(str);
+        }
+        return ret.toString();
     }
 
-    private static ArrayList<String> getComponents(Record[] plan, int index) {
-        if (plan.L == -1) {
-            if (plan.b == )
+    private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {     
+        if (plan[pos].L == -1) {
+            ArrayList<Integer> indexes = getIndex(pos, k);
+            str = ""
+            for (int i: indexes) {
+                if (str.length()>0) {
+                    str += "&";
+                }
+                str += formatIndex(i);
+            } 
+            if (plan[pos].b) {
+                String noBranch = code.get(1);
+                if (noBranch.length()>0) {
+                    noBranch += " & ";
+                }
+                noBranch += str;
+                code.set(1, noBranch);
+            } else {
+                String ifCode = code.get(0);
+                if (ifCode.length()>0) {
+                    ifCode += " && ";
+                } 
+                ifCode += "(" + str + ")";
+                code.set(0, ifCode);
+            }
+            getComponents(plan, plan[pos].L, k);
+            getComponents(plan, plan[pos].R, k);
+
         } 
     }
 
+    private static String formatIndex(int index) {
+        return "t" + index + "[o" + index + "[i]]";
+    }
+
+    private static ArrayList<Integer> getIndex(int pos, int k) {
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        pos += 1;
+        int mask = pos + 1;
+        for (int j=0; j<k; j++) {
+            int bit = (mask >> (k-j-1)) & 1;
+            if (bit == 1) {
+               indexes.add(j) 
+            }
+        }
+        return indexes;
+    }
 
 
     private static ArrayList<Double[]> loadQueryFile(String filename) throws IOException {

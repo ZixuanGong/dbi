@@ -1,4 +1,4 @@
-package dbi;
+// package dbi;
 
 public class Record {
   int n;    // num of basic terms

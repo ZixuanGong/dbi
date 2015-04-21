@@ -1,4 +1,4 @@
-package dbi;
+// package dbi;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -23,9 +23,10 @@ public class Optimizer {
         f = Double.parseDouble(config.getProperty("f"));
     }
 
-    private /* return type */ void plan(Double[] S) {
+    private Record[] plan(Double[] S) {
         Record A[] = genAllSubsets(S);
         for (int i = 0; i < A.length; i++) {
+<<<<<<< HEAD
         	for (int j = 0; j < A.length; j ++) {
         		int mask_right = i + 1;
         		int mask_left = j + 1;
@@ -47,8 +48,58 @@ public class Optimizer {
         			}	
         		}		
         	}
+=======
+            for (int j = 0; j < A.length; j++) {
+                int mask_right = i + 1;
+                int mask_left = j + 1;
+                if ((mask_left & mask_right) != 0) {
+                    continue;
+                }
+                if (suboptimalByCMetric(A[i], A[j])
+                    || suboptimalByDMetric(A[i], A[j])) {
+                    // suboptimal -> skip
+                } else {
+                    double cost = getCostForCombinedPlan(A[i], A[j]);
+                    int combinedIdx = (mask_left | mask_right) - 1;
+
+                    if (cost < A[combinedIdx].c) {
+                        A[combinedIdx].c = cost;
+                        A[combinedIdx].L = j;
+                        A[combinedIdx].R = i;
+                    }
+                }
+            }
+>>>>>>> a3ccf4f5b18284d3f0c7cc5877bb63e4e8d770f2
         }
         return A;
+    }
+
+    private double getCostForCombinedPlan(Record left, Record right) {
+        double p = left.p;
+        double q = p<=0.5 ? p : 1-p;
+        return getFcost(left) + m*q + p*right.c;
+    }
+
+    private boolean suboptimalByCMetric(Record left, Record right) {
+        double r_cmetric = (right.p - 1)/getFcost(right);
+        double l_cmetric = (left.p - 1)/getFcost(left);
+
+        if (left.p<=0.5 && right.p<=left.p && r_cmetric<l_cmetric)
+            return true;
+        else
+            return false;
+    }
+
+    private boolean suboptimalByDMetric(Record left, Record right) {
+        if (right.p < left.p && getFcost(right) < getFcost(left))
+            return true;
+        else
+            return false;
+    }
+
+    private double getFcost(Record rec) {
+        int k = rec.n;
+        return k*r + (k-1)*l + f*k + t;
     }
 
     private Record[] genAllSubsets(Double[] S) {
@@ -70,15 +121,15 @@ public class Optimizer {
                 }
             }
             boolean no_branch = false;
-            double cost = logicAndCost(subset);
-            double br_and_cost = noBranchAndCost(subset);
-            if (br_and_cost < cost) {
-                cost = br_and_cost;
+            double cost = getLogicAndCost(subset);
+            double no_branch_cost = getNoBranchCost(subset);
+            if (no_branch_cost < cost) {
+                cost = no_branch_cost;
                 no_branch = true;
             }
             double p = 1;
             for (double sel: subset) {
-            	p *= sel;
+                p *= sel;
             }
 
             Record r = new Record(subset.size(), p, no_branch, cost);
@@ -87,7 +138,7 @@ public class Optimizer {
         return ret;
     }
 
-    private double logicAndCost(ArrayList<Double> subset) {
+    private double getLogicAndCost(ArrayList<Double> subset) {
         double p = 1;   // product of all selectivities
         for (double sel: subset) {
             p *= sel;
@@ -98,7 +149,7 @@ public class Optimizer {
         return k*r + (k-1)*l + f*k + t + m*q + p*a;
     }
 
-    private double noBranchAndCost(ArrayList<Double> subset) {
+    private double getNoBranchCost(ArrayList<Double> subset) {
         int k = subset.size();
         return k*r + (k-1)*l + f*k + a;
     }
@@ -117,6 +168,7 @@ public class Optimizer {
 
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
             for (Double[] set: query_sets) {
+
             	Record[] plan = optimizer.plan(set); 
                 println("=============");
                 println(Arrays.toString(set));
@@ -133,14 +185,14 @@ public class Optimizer {
             e.printStackTrace();
         }
     }
-    
+
     private static String produceCode(Record[] plan) {
     	String ifCode = "";
     	String branchCode = "";
-        ArrayList<Integer> = getComponents(plan, plan.length-1)
+        ArrayList<String> = getComponents(plan, plan.length-1)
     }
 
-    private static ArrayList<Integer> getComponents(Record[] plan, int index) {
+    private static ArrayList<String> getComponents(Record[] plan, int index) {
         if (plan.L == -1) {
             if (plan.b == )
         } 

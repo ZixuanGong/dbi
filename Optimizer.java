@@ -173,7 +173,7 @@ public class Optimizer {
         if (code.get(1).length() != 0) {
             code.set(1, "\tanswer[j] = i;\n\tj += (" + code.get(1) + ");\n");
         } else {
-            code.set(1, "\tanswer[j++] = i;");
+            code.set(1, "\tanswer[j++] = i;\n");
         }
         code.add("}\n");
         StringBuffer ret = new StringBuffer();
@@ -208,10 +208,10 @@ public class Optimizer {
                 ifCode += "(" + str + ")";
                 code.set(0, ifCode);
             }
-            getComponents(code, plan, plan[pos].L, k);
-            getComponents(code, plan, plan[pos].R, k);
-
-        } 
+            return;
+        }
+        getComponents(code, plan, plan[pos].L, k);
+        getComponents(code, plan, plan[pos].R, k); 
     }
 
     private static String formatIndex(int index) {

@@ -237,45 +237,43 @@ public class Optimizer {
     }
 
     private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {
-        if (pos == plan.length-1) {
-            Record rightMostRecord = getRightMost(plan);
-        }
-        if (plan[pos].L == -1) {
-            ArrayList<Integer> indexes = getIndex(pos, k);
-            String str = "";
-            for (int i: indexes) {
-                if (str.length()>0) {
-                    str += " & ";
-                }
-                str += formatIndex(i);
-            }
-            if (plan[pos].b) {
-                String noBranch = code.get(1);
-                if (noBranch.length()>0) {
-                    noBranch += " & ";
-                }
-                noBranch += str;
+        if (plan[pos].L && plan[pos].R == -1) {
+            String part = getCodeFromIndex(pos, k);
+            part = ' (' + part + ') ';
+            String ifcode = code.get(0);
+            ifcode += part;
+            code.set(0, ifcode);
+        } else {
+            if (pos == plan.length-1) {
+                int rm = getRightMost(plan);
+                String noBranch = getCodeFromIndex(rm, k);
                 code.set(1, noBranch);
             } else {
-                String ifCode = code.get(0);
-                if (ifCode.length()>0) {
-                    ifCode += " && ";
-                }
-                ifCode += "(" + str + ")";
+                getComponents(code, plan, plan[pos].L, k);
+                String ifcode = code.get(0)
+                ifcode += " && "
                 code.set(0, ifCode);
+                getComponents(code, plan, plan[pos].R, k);
             }
-            return;
-        }
-        getComponents(code, plan, plan[pos].L, k);
-        getComponents(code, plan, plan[pos].R, k);
     }
 
-    private static String getRightMost(Record[] plan) {
-        int pos = plan.length-1;
-        Record tmp = plan[pos];
-        while (tmp.R != -1) {
-            tmp = plan
+    private static int getCodeFromIndex(int index, int k) {
+        ArrayList<Integer> indexes = getIndex(pos, k);
+        String str = "";
+        for (int i: indexes) {
+            if (str.length()>0) {
+                str += " & ";
+            }
+            str += formatIndex(i);
         }
+        return str;
+    }
+    private static int getRightMost(Record[] plan) {
+        int pos = plan.length-1;
+        while (plan[pos].R != -1) {
+            pos = plan[pos].R;
+        }
+        return pos;
     }
     private static String formatIndex(int index) {
         return "t" + index + "[o" + index + "[i]]";

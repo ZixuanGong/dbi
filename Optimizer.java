@@ -43,7 +43,7 @@ public class Optimizer {
 
                 if (suboptimalByCMetric(j, i)
                     || suboptimalByDMetric(j, i)) {
-                    // suboptimal -> skip
+                //     // suboptimal -> skip
                 } else {
                     double cost = getCostForCombinedPlan(j, i);
                     int combinedIdx = (mask_left | mask_right) - 1;
@@ -64,28 +64,10 @@ public class Optimizer {
     private double getCostForCombinedPlan(int l, int r) {
         Record left = A[l];
         Record right = A[r];
-
         double p = left.p;
         double q = p<=0.5 ? p : 1-p;
-        // double r_cost = getCostForBranchingAndPlan(right);
-        double r_cost;
-        if (right.L > 0)
-            r_cost = getCostForCombinedPlan(A[r].L, A[r].R);
-        else {
-            r_cost = right.c;
-        }
-        return getFcost(left) + m*q + p*r_cost;
-
+        return getFcost(left) + m*q + p*right.c;
     }
-
-    // private double getCostForBranchingAndPlan(Record r) {
-    //     if (r.L == -1) {    // plan is an &-term
-    //         return r.c;
-    //     } else {    // it's a &&-plan
-    //         Record lm = getLeftmostAndTerm(r);
-    //         return getCostForCombinedPlan(lm, )
-    //     }
-    // }
 
     private boolean suboptimalByCMetric(int l, int r) {
         // c_metric of left < c_metric of the leftmost & term in right
@@ -93,11 +75,11 @@ public class Optimizer {
         Record r_lm = A[r_lm_idx];
         Record left = A[l];
 
-        Pair l_cmetric = new Pair((left.p - 1.0)/getFcost(left), left.p);
-        Pair r_cmetric = new Pair((r_lm.p - 1.0)/getFcost(r_lm), r_lm.p);
+        Pair l_cmetric = new Pair((left.p - 1)/getFcost(left), left.p);
+        Pair r_cmetric = new Pair((r_lm.p - 1)/getFcost(r_lm), r_lm.p);
 
         // l < r
-        return l_cmetric.compareTo(r_cmetric) > 0 ? true : false;
+        return l_cmetric.isDominatedBy(r_cmetric);
     }
 
     private int getLeftmostAndTerm(int r) {
@@ -118,7 +100,7 @@ public class Optimizer {
         for (int i = 1; i < terms.size(); i++) { // skip the left most term
             Record term = A[i];
             Pair r_dmetric = new Pair(getFcost(term), term.p);
-            if (l_dmetric.compareTo(r_dmetric) > 0)
+            if (l_dmetric.isDominatedBy(r_dmetric))
                 return true;
         }
         return false;

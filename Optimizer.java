@@ -13,6 +13,7 @@ import javax.xml.namespace.QName;
 
 public class Optimizer {
     double r,t,l,m,a,f;
+    private Record A[];
 
     public Optimizer(Properties config) {
         r = Double.parseDouble(config.getProperty("r"));
@@ -24,17 +25,24 @@ public class Optimizer {
     }
 
     private Record[] plan(Double[] S) {
-        Record A[] = genAllSubsets(S);
+        A = genAllSubsets(S);
 
-        for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < A.length; j++) {
+        Arrays.sort(A);
+        for (Record r: A)
+            println(r.toString());
+
+        for (int i = 0; i < A.length; i++) { // s: A[i], right child
+            for (int j = 0; j < A.length; j++) { // s': A[j], left child, &-term
+
+                // check if s (intersect with) s' is empty
                 int mask_right = i + 1;
                 int mask_left = j + 1;
                 if ((mask_left & mask_right) != 0) {
                     continue;
                 }
-                if (suboptimalByCMetric(A[j], A[i])
-                    || suboptimalByDMetric(A[j], A[i])) {
+
+                if (suboptimalByCMetric(j, i)
+                    || suboptimalByDMetric(j, i)) {
                     // suboptimal -> skip
                 } else {
                     double cost = getCostForCombinedPlan(A[j], A[i]);
@@ -57,21 +65,55 @@ public class Optimizer {
         return getFcost(left) + m*q + p*right.c;
     }
 
-    private boolean suboptimalByCMetric(Record left, Record right) {
-        double r_cmetric = (right.p - 1.0)/getFcost(right);
-        double l_cmetric = (left.p - 1.0)/getFcost(left);
+    private boolean suboptimalByCMetric(int l, int r) {
+        // c_metric of left < c_metric of the leftmost & term in right
+        Record r_lm = getLeftmostAndTerm(A[r]);
+        Record left = A[l];
 
-        if (right.p>left.p && r_cmetric>l_cmetric)
-            return true;
-        else
-            return false;
+        Pair l_cmetric = new Pair((left.p - 1.0)/getFcost(left), left.p);
+        Pair r_cmetric = new Pair((r_lm.p - 1.0)/getFcost(r_lm), r_lm.p);
+
+        // l < r
+        return l_cmetric.compareTo(r_cmetric) > 0 ? true : false;
     }
 
-    private boolean suboptimalByDMetric(Record left, Record right) {
-        if (right.p<=0.5 && right.p > left.p && getFcost(right) > getFcost(left))
-            return true;
-        else
+    private Record getLeftmostAndTerm(Record r) {
+        Record lm = r;
+        while (lm.L != -1) {
+            lm = A[lm.L];
+        }
+        return lm;
+    }
+
+    private boolean suboptimalByDMetric(int l, int r) {
+        Record left = A[l];
+        if (left.p > 0.5)
             return false;
+
+        Pair l_dmetric = new Pair(getFcost(left), left.p);
+        ArrayList<Integer> terms = getAllAndTerms(r);
+        for (int i = 1; i < terms.size(); i++) { // skip the left most term
+            Record term = A[i];
+            Pair r_dmetric = new Pair(getFcost(term), term.p);
+            if (l_dmetric.compareTo(r_dmetric) > 0)
+                return true;
+        }
+        return false;
+    }
+
+    private ArrayList<Integer> getAllAndTerms (int r) {
+        ArrayList<Integer> ret = new ArrayList<Integer>();
+        inOrderTraverse(ret, r);
+        return ret;
+    }
+
+    private void inOrderTraverse(ArrayList<Integer> list, int i) {
+        if (i == -1)
+            return;
+
+        inOrderTraverse(list, A[i].L);
+        list.add(i);
+        inOrderTraverse(list, A[i].R);
     }
 
     private double getFcost(Record rec) {
@@ -144,13 +186,16 @@ public class Optimizer {
             Optimizer optimizer = new Optimizer(config);
 
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
+
             for (Double[] set: query_sets) {
+                println("=============");
 
             	Record[] plan = optimizer.plan(set);
+
                 println("=============");
                 println(Arrays.toString(set));
                 println("-------------");
-                //println(produceCode(plan));
+                // println(produceCode(plan, set.length));
                 println("-------------");
                 println("cost: " + plan[plan.length-1].c);
             }
@@ -163,18 +208,74 @@ public class Optimizer {
         }
     }
 
-    // private static String produceCode(Record[] plan) {
-    	// String ifCode = "";
-    	// String branchCode = "";
-     //    ArrayList<String> = getComponents(plan, plan.length-1);
-    // }
+    private static String produceCode(Record[] plan, int k) {
+    	String ifCode = "";
+    	String noBranchCode = "";
+        ArrayList<String> code = new ArrayList<String>();
+        code.add(ifCode);
+        code.add(noBranchCode);
+        getComponents(code, plan, plan.length-1, k);
+        code.set(0, "if(" + code.get(0) + "){\n");
+        if (code.get(1).length() != 0) {
+            code.set(1, "\tanswer[j] = i;\n\tj += (" + code.get(1) + ");\n");
+        } else {
+            code.set(1, "\tanswer[j++] = i;\n");
+        }
+        code.add("}\n");
+        StringBuffer ret = new StringBuffer();
+        for (String str: code) {
+            ret.append(str);
+        }
+        return ret.toString();
+    }
 
-    // private static ArrayList<String> getComponents(Record[] plan, int index) {
-        // if (plan.L == -1) {
-        //     if (plan.b == )
-        // }
-    // }
+    private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {
+        if (plan[pos].L == -1) {
+            ArrayList<Integer> indexes = getIndex(pos, k);
+            String str = "";
+            for (int i: indexes) {
+                if (str.length()>0) {
+                    str += "&";
+                }
+                str += formatIndex(i);
+            }
+            if (plan[pos].b) {
+                String noBranch = code.get(1);
+                if (noBranch.length()>0) {
+                    noBranch += " & ";
+                }
+                noBranch += str;
+                code.set(1, noBranch);
+            } else {
+                String ifCode = code.get(0);
+                if (ifCode.length()>0) {
+                    ifCode += " && ";
+                }
+                ifCode += "(" + str + ")";
+                code.set(0, ifCode);
+            }
+            return;
+        }
+        getComponents(code, plan, plan[pos].L, k);
+        getComponents(code, plan, plan[pos].R, k);
+    }
 
+    private static String formatIndex(int index) {
+        return "t" + index + "[o" + index + "[i]]";
+    }
+
+    private static ArrayList<Integer> getIndex(int pos, int k) {
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        pos += 1;
+        int mask = pos + 1;
+        for (int j=0; j<k; j++) {
+            int bit = (mask >> (k-j-1)) & 1;
+            if (bit == 1) {
+               indexes.add(j);
+            }
+        }
+        return indexes;
+    }
 
 
     private static ArrayList<Double[]> loadQueryFile(String filename) throws IOException {
@@ -197,6 +298,10 @@ public class Optimizer {
     }
 
     private static void println(String msg) {
-        System.out.println(msg);
+        // System.out.println(msg);
+    }
+
+    private static void debug(String msg) {
+        System.err.println(msg);
     }
 }

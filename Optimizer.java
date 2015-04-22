@@ -201,7 +201,7 @@ public class Optimizer {
                 println(Arrays.toString(set));
                 debug(Arrays.toString(set));
                 println("-------------");
-                // println(produceCode(plan, set.length));
+                println(produceCode(plan, set.length));
                 println("-------------");
                 println("cost: " + plan[plan.length-1].c);
                 debug("cost: " + plan[plan.length-1].c);
@@ -237,6 +237,9 @@ public class Optimizer {
     }
 
     private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {
+        if (pos == plan.length-1) {
+            Record rightMostRecord = getRightMost(plan);
+        }
         if (plan[pos].L == -1) {
             ArrayList<Integer> indexes = getIndex(pos, k);
             String str = "";
@@ -267,6 +270,13 @@ public class Optimizer {
         getComponents(code, plan, plan[pos].R, k);
     }
 
+    private static String getRightMost(Record[] plan) {
+        int pos = plan.length-1;
+        Record tmp = plan[pos];
+        while (tmp.R != -1) {
+            tmp = plan
+        }
+    }
     private static String formatIndex(int index) {
         return "t" + index + "[o" + index + "[i]]";
     }

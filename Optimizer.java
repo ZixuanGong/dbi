@@ -99,10 +99,15 @@ public class Optimizer {
             boolean no_branch = false;
             double cost = getLogicAndCost(subset);
             double no_branch_cost = getNoBranchCost(subset);
+            //debug
+            println(""+cost);
             if (no_branch_cost < cost) {
                 cost = no_branch_cost;
                 no_branch = true;
             }
+            //debug
+            println(""+no_branch_cost);
+
             double p = 1;
             for (double sel: subset) {
                 p *= sel;
@@ -141,7 +146,6 @@ public class Optimizer {
             config.load(new FileInputStream(args[1]));
 
             Optimizer optimizer = new Optimizer(config);
-
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
             for (Double[] set: query_sets) {
 
@@ -189,7 +193,7 @@ public class Optimizer {
             String str = "";
             for (int i: indexes) {
                 if (str.length()>0) {
-                    str += "&";
+                    str += " & ";
                 }
                 str += formatIndex(i);
             } 

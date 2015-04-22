@@ -43,23 +43,27 @@ public class Optimizer {
 
                 if (suboptimalByCMetric(j, i)
                     || suboptimalByDMetric(j, i)) {
-                    // suboptimal -> skip
+                //     // suboptimal -> skip
                 } else {
-                    double cost = getCostForCombinedPlan(A[j], A[i]);
+                    double cost = getCostForCombinedPlan(j, i);
                     int combinedIdx = (mask_left | mask_right) - 1;
+                    // debug("combinedIdx="+Integer.toBinaryString(combinedIdx));
 
                     if (cost < A[combinedIdx].c) {
                         A[combinedIdx].c = cost;
                         A[combinedIdx].L = j;
                         A[combinedIdx].R = i;
                     }
+                    // debug("cost="+A[combinedIdx].c);
                 }
             }
         }
         return A;
     }
 
-    private double getCostForCombinedPlan(Record left, Record right) {
+    private double getCostForCombinedPlan(int l, int r) {
+        Record left = A[l];
+        Record right = A[r];
         double p = left.p;
         double q = p<=0.5 ? p : 1-p;
         return getFcost(left) + m*q + p*right.c;
@@ -67,20 +71,21 @@ public class Optimizer {
 
     private boolean suboptimalByCMetric(int l, int r) {
         // c_metric of left < c_metric of the leftmost & term in right
-        Record r_lm = getLeftmostAndTerm(A[r]);
+        int r_lm_idx = getLeftmostAndTerm(r);
+        Record r_lm = A[r_lm_idx];
         Record left = A[l];
 
-        Pair l_cmetric = new Pair((left.p - 1.0)/getFcost(left), left.p);
-        Pair r_cmetric = new Pair((r_lm.p - 1.0)/getFcost(r_lm), r_lm.p);
+        Pair l_cmetric = new Pair((left.p - 1)/getFcost(left), left.p);
+        Pair r_cmetric = new Pair((r_lm.p - 1)/getFcost(r_lm), r_lm.p);
 
         // l < r
-        return l_cmetric.compareTo(r_cmetric) > 0 ? true : false;
+        return l_cmetric.isDominatedBy(r_cmetric);
     }
 
-    private Record getLeftmostAndTerm(Record r) {
-        Record lm = r;
-        while (lm.L != -1) {
-            lm = A[lm.L];
+    private int getLeftmostAndTerm(int r) {
+        int lm = r;
+        while (A[lm].L != -1) {
+            lm = A[lm].L;
         }
         return lm;
     }
@@ -95,7 +100,7 @@ public class Optimizer {
         for (int i = 1; i < terms.size(); i++) { // skip the left most term
             Record term = A[i];
             Pair r_dmetric = new Pair(getFcost(term), term.p);
-            if (l_dmetric.compareTo(r_dmetric) > 0)
+            if (l_dmetric.isDominatedBy(r_dmetric))
                 return true;
         }
         return false;
@@ -140,42 +145,40 @@ public class Optimizer {
                     subset.add(S[j]);
                 }
             }
-            boolean no_branch = false;
-            double cost = getLogicAndCost(subset);
-            double no_branch_cost = getNoBranchCost(subset);
-            //debug
-            println(""+cost);
-            if (no_branch_cost < cost) {
-                cost = no_branch_cost;
-                no_branch = true;
-            }
-            //debug
-            println(""+no_branch_cost);
 
             double p = 1;
             for (double sel: subset) {
                 p *= sel;
             }
 
-            Record r = new Record(subset.size(), p, no_branch, cost);
+            int n = subset.size();
+
+            boolean no_branch = false;
+            double cost = getLogicAndCost(p, n);
+            double no_branch_cost = getNoBranchCost(n);
+            if (no_branch_cost < cost) {
+                cost = no_branch_cost;
+                no_branch = true;
+            }
+
+
+            Record r = new Record(n, p, no_branch, cost);
             ret[i] = r;
         }
         return ret;
     }
 
-    private double getLogicAndCost(ArrayList<Double> subset) {
-        double p = 1;   // product of all selectivities
-        for (double sel: subset) {
-            p *= sel;
-        }
+    private double getLogicAndCost(double p, int k) {
+        // double p = 1;   // product of all selectivities
+        // for (double sel: subset) {
+        //     p *= sel;
+        // }
 
         double q = p<=0.5 ? p : 1-p;
-        int k = subset.size();
         return k*r + (k-1)*l + f*k + t + m*q + p*a;
     }
 
-    private double getNoBranchCost(ArrayList<Double> subset) {
-        int k = subset.size();
+    private double getNoBranchCost(int k) {
         return k*r + (k-1)*l + f*k + a;
     }
 

@@ -25,41 +25,19 @@ public class Optimizer {
 
     private Record[] plan(Double[] S) {
         Record A[] = genAllSubsets(S);
+
         for (int i = 0; i < A.length; i++) {
-<<<<<<< HEAD
-        	for (int j = 0; j < A.length; j ++) {
-        		int mask_right = i + 1;
-        		int mask_left = j + 1;
-        		if (mask_left & mask_right != 0) {
-        			continue;
-        		}
-        		if (compareCMetric(A[i], A[j])) {
-        			
-        		} else if (compareDMetric(A[i], A[j])) {
-        			
-        		} else {
-        			double p = A[i].p;
-        			double q = p<=0.5 ? p : 1-p;
-        			double cost = A[i].c + m*q + p*A[j].c;
-        			if (cost < A[mask_left | mask_right].c) {
-        				A[mask_left | mask_right].c = cost;
-        				A[mask_left | mask_right].L = j;
-        				A[mask_left | mask_right].R = i;
-        			}	
-        		}		
-        	}
-=======
             for (int j = 0; j < A.length; j++) {
                 int mask_right = i + 1;
                 int mask_left = j + 1;
                 if ((mask_left & mask_right) != 0) {
                     continue;
                 }
-                if (suboptimalByCMetric(A[i], A[j])
-                    || suboptimalByDMetric(A[i], A[j])) {
+                if (suboptimalByCMetric(A[j], A[i])
+                    || suboptimalByDMetric(A[j], A[i])) {
                     // suboptimal -> skip
                 } else {
-                    double cost = getCostForCombinedPlan(A[i], A[j]);
+                    double cost = getCostForCombinedPlan(A[j], A[i]);
                     int combinedIdx = (mask_left | mask_right) - 1;
 
                     if (cost < A[combinedIdx].c) {
@@ -69,7 +47,6 @@ public class Optimizer {
                     }
                 }
             }
->>>>>>> a3ccf4f5b18284d3f0c7cc5877bb63e4e8d770f2
         }
         return A;
     }
@@ -81,17 +58,17 @@ public class Optimizer {
     }
 
     private boolean suboptimalByCMetric(Record left, Record right) {
-        double r_cmetric = (right.p - 1)/getFcost(right);
-        double l_cmetric = (left.p - 1)/getFcost(left);
+        double r_cmetric = (right.p - 1.0)/getFcost(right);
+        double l_cmetric = (left.p - 1.0)/getFcost(left);
 
-        if (left.p<=0.5 && right.p<=left.p && r_cmetric<l_cmetric)
+        if (right.p>left.p && r_cmetric>l_cmetric)
             return true;
         else
             return false;
     }
 
     private boolean suboptimalByDMetric(Record left, Record right) {
-        if (right.p < left.p && getFcost(right) < getFcost(left))
+        if (right.p<=0.5 && right.p > left.p && getFcost(right) > getFcost(left))
             return true;
         else
             return false;
@@ -169,13 +146,13 @@ public class Optimizer {
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
             for (Double[] set: query_sets) {
 
-            	Record[] plan = optimizer.plan(set); 
+            	Record[] plan = optimizer.plan(set);
                 println("=============");
                 println(Arrays.toString(set));
                 println("-------------");
                 //println(produceCode(plan));
                 println("-------------");
-                println("cost: " /* + cost */);
+                println("cost: " + plan[plan.length-1].c);
             }
             println("=============");
 
@@ -186,17 +163,17 @@ public class Optimizer {
         }
     }
 
-    private static String produceCode(Record[] plan) {
-    	String ifCode = "";
-    	String branchCode = "";
-        ArrayList<String> = getComponents(plan, plan.length-1)
-    }
+    // private static String produceCode(Record[] plan) {
+    	// String ifCode = "";
+    	// String branchCode = "";
+     //    ArrayList<String> = getComponents(plan, plan.length-1);
+    // }
 
-    private static ArrayList<String> getComponents(Record[] plan, int index) {
-        if (plan.L == -1) {
-            if (plan.b == )
-        } 
-    }
+    // private static ArrayList<String> getComponents(Record[] plan, int index) {
+        // if (plan.L == -1) {
+        //     if (plan.b == )
+        // }
+    // }
 
 
 

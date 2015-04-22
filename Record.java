@@ -1,6 +1,6 @@
 // package dbi;
 
-public class Record {
+public class Record implements Comparable {
   int n;    // num of basic terms
   double p; // product of the selectivities of the terms in the subset
   boolean b;  // if no-branch is used
@@ -13,5 +13,13 @@ public class Record {
     this.p = p;
     this.b = b;
     this.c = c;
+  }
+
+  public String toString(){
+    return "Rec: n="+n+" p="+p+" b="+b+" c="+c+" L="+L+" R="+R;
+  }
+
+  public int compareTo(Object other){
+    return this.n - ((Record)other).n;
   }
 }

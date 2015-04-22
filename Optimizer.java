@@ -27,7 +27,7 @@ public class Optimizer {
     private Record[] plan(Double[] S) {
         A = genAllSubsets(S);
 
-        Arrays.sort(A);
+        // Arrays.sort(A);
         for (Record r: A)
             println(r.toString());
 
@@ -102,18 +102,19 @@ public class Optimizer {
     }
 
     private ArrayList<Integer> getAllAndTerms (int r) {
+        // only leaves are and-terms
         ArrayList<Integer> ret = new ArrayList<Integer>();
-        inOrderTraverse(ret, r);
+        traverseLeaves(ret, r);
         return ret;
     }
 
-    private void inOrderTraverse(ArrayList<Integer> list, int i) {
-        if (i == -1)
-            return;
-
-        inOrderTraverse(list, A[i].L);
-        list.add(i);
-        inOrderTraverse(list, A[i].R);
+    private void traverseLeaves(ArrayList<Integer> list, int i) {
+        if (A[i].L == -1)   // it's a leaf
+            list.add(i);
+        else {
+            traverseLeaves(list, A[i].L);
+            traverseLeaves(list, A[i].R);
+        }
     }
 
     private double getFcost(Record rec) {
@@ -194,10 +195,12 @@ public class Optimizer {
 
                 println("=============");
                 println(Arrays.toString(set));
+                debug(Arrays.toString(set));
                 println("-------------");
                 // println(produceCode(plan, set.length));
                 println("-------------");
                 println("cost: " + plan[plan.length-1].c);
+                debug("cost: " + plan[plan.length-1].c);
             }
             println("=============");
 

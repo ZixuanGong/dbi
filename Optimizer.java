@@ -266,7 +266,7 @@ public class Optimizer {
     }
     
     // this function takes an index of the plan as input and
-    // output the basic logical and component
+    // output the basic logical and gitcomponent
     private static String getCodeFromIndex(int pos, int k) {
         ArrayList<Integer> indexes = getIndex(pos, k);
         String str = "";

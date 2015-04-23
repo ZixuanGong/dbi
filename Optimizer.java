@@ -204,6 +204,8 @@ public class Optimizer {
         }
     }
 
+    // the code is divided into two parts, one is for logical and and branch and
+    // the other part is for no branch code
     private static String produceCode(Record[] plan, int k) {
     	String ifCode = "";
     	String noBranchCode = "";
@@ -226,10 +228,13 @@ public class Optimizer {
         return ret.toString();
     }
 
+    // this function recursively visit the plan and construct the code
+    // if the right most term has nobranch bit set, then the code has a nobranch section
     private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int rm, int k) {
+        // basic case: find all logical and term
         if (plan[pos].L == -1 && plan[pos].R == -1) {
             String part = getCodeFromIndex(pos, k);
-            part = " (" + part + ") ";
+            part = "(" + part + ")";
             String ifCode = code.get(0);
             ifCode += part;
             code.set(0, ifCode);
@@ -248,7 +253,9 @@ public class Optimizer {
             }
         }
     }
-
+    
+    // this function takes an index of the plan as input and
+    // output the basic logical and component
     private static String getCodeFromIndex(int pos, int k) {
         ArrayList<Integer> indexes = getIndex(pos, k);
         String str = "";
@@ -260,6 +267,8 @@ public class Optimizer {
         }
         return str;
     }
+    // this simple function iterate along the right most path 
+    // in order to find the rightmost plan
     private static int getRightMost(Record[] plan) {
         int pos = plan.length-1;
         while (plan[pos].R != -1) {
@@ -267,10 +276,13 @@ public class Optimizer {
         }
         return pos;
     }
+
     private static String formatIndex(int index) {
         return "t" + index + "[o" + index + "[i]]";
     }
 
+    // this function takes a list of index of the subset as input and
+    // generate all terms it contains using bit manipulation 
     private static ArrayList<Integer> getIndex(int pos, int k) {
         ArrayList<Integer> indexes = new ArrayList<Integer>();
         pos += 1;

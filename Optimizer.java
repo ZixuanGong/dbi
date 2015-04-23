@@ -28,9 +28,6 @@ public class Optimizer {
         A = genAllSubsets(S);
 
         // Arrays.sort(A);
-        for (Record r: A)
-            println(r.toString());
-
         for (int i = 0; i < A.length; i++) { // s: A[i], right child
             for (int j = 0; j < A.length; j++) { // s': A[j], left child, &-term
 
@@ -240,12 +237,12 @@ public class Optimizer {
     }
 
     private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {
-        if (plan[pos].L && plan[pos].R == -1) {
+        if (plan[pos].L == -1 && plan[pos].R == -1) {
             String part = getCodeFromIndex(pos, k);
-            part = ' (' + part + ') ';
-            String ifcode = code.get(0);
-            ifcode += part;
-            code.set(0, ifcode);
+            part = " (" + part + ") ";
+            String ifCode = code.get(0);
+            ifCode += part;
+            code.set(0, ifCode);
         } else {
             if (pos == plan.length-1) {
                 int rm = getRightMost(plan);
@@ -253,14 +250,15 @@ public class Optimizer {
                 code.set(1, noBranch);
             } else {
                 getComponents(code, plan, plan[pos].L, k);
-                String ifcode = code.get(0)
-                ifcode += " && "
+                String ifCode = code.get(0);
+                ifCode += " && ";
                 code.set(0, ifCode);
                 getComponents(code, plan, plan[pos].R, k);
             }
+        }
     }
 
-    private static int getCodeFromIndex(int index, int k) {
+    private static String getCodeFromIndex(int pos, int k) {
         ArrayList<Integer> indexes = getIndex(pos, k);
         String str = "";
         for (int i: indexes) {
@@ -286,8 +284,8 @@ public class Optimizer {
         ArrayList<Integer> indexes = new ArrayList<Integer>();
         pos += 1;
         int mask = pos + 1;
-        for (int j=0; j<k; j++) {
-            int bit = (mask >> (k-j-1)) & 1;
+        for (int j=1; j<=k; j++) {
+            int bit = (mask >> (k-j)) & 1;
             if (bit == 1) {
                indexes.add(j);
             }
@@ -316,10 +314,10 @@ public class Optimizer {
     }
 
     private static void println(String msg) {
-        // System.out.println(msg);
+        System.out.println(msg);
     }
 
     private static void debug(String msg) {
-        System.err.println(msg);
+        // System.err.println(msg);
     }
 }

@@ -1,6 +1,6 @@
 // package dbi;
 
-public class Record implements Comparable {
+public class Record {
   int n;    // num of basic terms
   double p; // product of the selectivities of the terms in the subset
   boolean b;  // if no-branch is used

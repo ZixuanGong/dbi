@@ -18,8 +18,4 @@ public class Record implements Comparable {
   public String toString(){
     return "Rec: n="+n+" p="+p+" b="+b+" c="+c+" L="+L+" R="+R;
   }
-
-  public int compareTo(Object other){
-    return this.n - ((Record)other).n;
-  }
 }

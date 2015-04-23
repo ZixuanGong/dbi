@@ -12,8 +12,8 @@ import java.util.Properties;
 import javax.xml.namespace.QName;
 
 public class Optimizer {
-    double r,t,l,m,a,f;
-    private Record A[];
+    double r,t,l,m,a,f; // CPU specification parameters
+    private Record A[]; // array of all subsets of basic terms
 
     public Optimizer(Properties config) {
         r = Double.parseDouble(config.getProperty("r"));
@@ -25,33 +25,28 @@ public class Optimizer {
     }
 
     private Record[] plan(Double[] S) {
-        A = genAllSubsets(S);
+        A = genAllSubsets(S);   // generate all (2^k)-1 plans
 
-        // Arrays.sort(A);
         for (int i = 0; i < A.length; i++) { // s: A[i], right child
             for (int j = 0; j < A.length; j++) { // s': A[j], left child, &-term
 
                 // check if s (intersect with) s' is empty
                 int mask_right = i + 1;
                 int mask_left = j + 1;
-                if ((mask_left & mask_right) != 0) {
+                if ((mask_left & mask_right) != 0)
                     continue;
-                }
 
-                if (suboptimalByCMetric(j, i)
-                    || suboptimalByDMetric(j, i)) {
-                //     // suboptimal -> skip
+                if (suboptimalByCMetric(j, i) || suboptimalByDMetric(j, i)) {
+                    // suboptimal -> skip
                 } else {
                     double cost = getCostForCombinedPlan(j, i);
                     int combinedIdx = (mask_left | mask_right) - 1;
-                    // debug("combinedIdx="+Integer.toBinaryString(combinedIdx));
 
                     if (cost < A[combinedIdx].c) {
                         A[combinedIdx].c = cost;
                         A[combinedIdx].L = j;
                         A[combinedIdx].R = i;
                     }
-                    // debug("cost="+A[combinedIdx].c);
                 }
             }
         }
@@ -63,7 +58,7 @@ public class Optimizer {
         Record right = A[r];
         double p = left.p;
         double q = p<=0.5 ? p : 1-p;
-        return getFcost(left) + m*q + p*right.c;
+        return getFcost(left) + m*q + p*right.c;    // Eq (1)
     }
 
     private boolean suboptimalByCMetric(int l, int r) {
@@ -75,7 +70,6 @@ public class Optimizer {
         Pair l_cmetric = new Pair((left.p - 1)/getFcost(left), left.p);
         Pair r_cmetric = new Pair((r_lm.p - 1)/getFcost(r_lm), r_lm.p);
 
-        // l < r
         return l_cmetric.isDominatedBy(r_cmetric);
     }
 
@@ -93,6 +87,9 @@ public class Optimizer {
             return false;
 
         Pair l_dmetric = new Pair(getFcost(left), left.p);
+
+        // compare d-metric of s' with d-metric of all the &-terms of s
+        // (except the leftmost one)
         ArrayList<Integer> terms = getAllAndTerms(r);
         for (int i = 1; i < terms.size(); i++) { // skip the left most term
             Record term = A[i];
@@ -104,16 +101,17 @@ public class Optimizer {
     }
 
     private ArrayList<Integer> getAllAndTerms (int r) {
-        // only leaves are and-terms
+        // only leaves are &-terms
         ArrayList<Integer> ret = new ArrayList<Integer>();
         traverseLeaves(ret, r);
         return ret;
     }
 
+    // in order traverse the &-terms
     private void traverseLeaves(ArrayList<Integer> list, int i) {
-        if (A[i].L == -1)   // it's a leaf
+        if (A[i].L == -1) {  // it's a leaf
             list.add(i);
-        else {
+        } else {
             traverseLeaves(list, A[i].L);
             traverseLeaves(list, A[i].R);
         }
@@ -133,10 +131,10 @@ public class Optimizer {
             ArrayList<Double> subset = new ArrayList<Double>();
 
             // Add basic terms to a subset
-            // e.g. if k=4, mask=(dec)2=(bin)0010, then create a subset for S[3]
+            // e.g. if k=4, mask=(dec)3=(bin)0011, A[2] = {S[3], S[4]}
             int mask = i+1;
             for (int j=0; j<k; j++) {
-                /* j: index of basic term */
+                // j: index of basic term
                 int bit = (mask >> (k-j-1)) & 1;
                 if (bit == 1) {
                     subset.add(S[j]);
@@ -144,9 +142,8 @@ public class Optimizer {
             }
 
             double p = 1;
-            for (double sel: subset) {
+            for (double sel: subset)
                 p *= sel;
-            }
 
             int n = subset.size();
 
@@ -158,7 +155,6 @@ public class Optimizer {
                 no_branch = true;
             }
 
-
             Record r = new Record(n, p, no_branch, cost);
             ret[i] = r;
         }
@@ -166,11 +162,6 @@ public class Optimizer {
     }
 
     private double getLogicAndCost(double p, int k) {
-        // double p = 1;   // product of all selectivities
-        // for (double sel: subset) {
-        //     p *= sel;
-        // }
-
         double q = p<=0.5 ? p : 1-p;
         return k*r + (k-1)*l + f*k + t + m*q + p*a;
     }
@@ -180,7 +171,7 @@ public class Optimizer {
     }
 
     public static void main(String[] args) {
-        /* read in query.txt and config.txt */
+        // read in query.txt and config.txt
     	if (args.length != 2) {
     		System.out.println("Need two Parameters and get one instead");
     		System.exit(-1);
@@ -192,21 +183,19 @@ public class Optimizer {
             Optimizer optimizer = new Optimizer(config);
             ArrayList<Double[]> query_sets = loadQueryFile(args[0]);
 
+            // handle 1 line in query.txt at a time
             for (Double[] set: query_sets) {
-                println("=============");
-
+                // run the algorithm in the paper
             	Record[] plan = optimizer.plan(set);
 
-                println("=============");
+                println("====================================================");
                 println(Arrays.toString(set));
-                debug(Arrays.toString(set));
-                println("-------------");
+                println("----------------------------------------------------");
                 println(produceCode(plan, set.length));
-                println("-------------");
+                println("----------------------------------------------------");
                 println("cost: " + plan[plan.length-1].c);
-                debug("cost: " + plan[plan.length-1].c);
             }
-            println("=============");
+            println("====================================================");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -303,7 +292,6 @@ public class Optimizer {
         String query = br.readLine();
 
         while (query != null) {
-            // System.out.println(query);
             String[] tokens = query.split(" ");
             Double[] selectivity_list = new Double[tokens.length];
             for (int i=0; i<tokens.length; i++) {
@@ -317,9 +305,5 @@ public class Optimizer {
 
     private static void println(String msg) {
         System.out.println(msg);
-    }
-
-    private static void debug(String msg) {
-        // System.err.println(msg);
     }
 }

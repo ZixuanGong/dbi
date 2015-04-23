@@ -18,5 +18,6 @@
 `$ make`  
 `$ ./stage2.sh query.txt config.txt`
 
-### Query File
+### File Format
+#### Query File
 Each line in the query file is the selectivities for a set of basic terms. Each selectivity is separated by a whitespace.

@@ -19,7 +19,3 @@ This is the course project 2 for W4112 Database systems implemetation. The idea 
 ### Make and Run
 `$ make`  
 `$ ./stage2.sh query.txt config.txt`
-
-### File Format
-#### Query File
-Each line in the query file is the selectivities for a set of basic terms. Each selectivity is separated by a whitespace.

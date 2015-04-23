@@ -1,17 +1,11 @@
-# File: Makefile
-# Simple make file to build the executable
+JAVAC=javac
+sources = $(wildcard *.java)
+classes = $(sources:.java=.class)
 
-TARGETS = branch_mispred
-CC=gcc
-CFLAGS = -g -Wall -O3 -save-temps
-INCLUDE = -I/lib/modules/`uname -r`/build/include
-LIBS = 
+all: $(classes)
 
-all: $(TARGETS)
+clean :
+	rm -f *.class
 
-branch_mispred: branch_mispred.o
-	$(CC) $(CFLAGS) $(LIB_INCLUDE) -o $@ branch_mispred.o $(LIBS)
-.c.o:
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o  $*.o $<
-clean:
-	rm -f *.o *~ $(TARGETS)
+%.class : %.java
+	$(JAVAC) $<

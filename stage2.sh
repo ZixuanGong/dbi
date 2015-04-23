@@ -1,2 +1,1 @@
-javac *.java
-java Optimizer query.txt config.txt
+java Optimizer $1 $2

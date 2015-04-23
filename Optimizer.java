@@ -221,7 +221,8 @@ public class Optimizer {
         ArrayList<String> code = new ArrayList<String>();
         code.add(ifCode);
         code.add(noBranchCode);
-        getComponents(code, plan, plan.length-1, k);
+        int rm = getRightMost(plan);
+        getComponents(code, plan, plan.length-1, rm, k);
         code.set(0, "if(" + code.get(0) + "){\n");
         if (code.get(1).length() != 0) {
             code.set(1, "\tanswer[j] = i;\n\tj += (" + code.get(1) + ");\n");
@@ -236,7 +237,7 @@ public class Optimizer {
         return ret.toString();
     }
 
-    private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int k) {
+    private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int rm, int k) {
         if (plan[pos].L == -1 && plan[pos].R == -1) {
             String part = getCodeFromIndex(pos, k);
             part = " (" + part + ") ";
@@ -245,15 +246,16 @@ public class Optimizer {
             code.set(0, ifCode);
         } else {
             if (pos == plan.length-1) {
-                int rm = getRightMost(plan);
                 String noBranch = getCodeFromIndex(rm, k);
                 code.set(1, noBranch);
-            } else {
-                getComponents(code, plan, plan[pos].L, k);
+            }
+
+            getComponents(code, plan, plan[pos].L, rm, k);
+            if (plan[pos].R != rm) {
                 String ifCode = code.get(0);
                 ifCode += " && ";
                 code.set(0, ifCode);
-                getComponents(code, plan, plan[pos].R, k);
+                getComponents(code, plan, plan[pos].R, rm, k);
             }
         }
     }
@@ -283,7 +285,7 @@ public class Optimizer {
     private static ArrayList<Integer> getIndex(int pos, int k) {
         ArrayList<Integer> indexes = new ArrayList<Integer>();
         pos += 1;
-        int mask = pos + 1;
+        int mask = pos;
         for (int j=1; j<=k; j++) {
             int bit = (mask >> (k-j)) & 1;
             if (bit == 1) {

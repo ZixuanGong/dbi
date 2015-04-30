@@ -6,7 +6,16 @@ import matplotlib.pyplot as plt
 text = []
 real = []
 predict = []
-input = open("./template/output.txt")
+
+input = open("./template/output_1_2.txt")
+text.append(input.read())
+input.close()
+
+input = open("./template/output_1_1.txt")
+text.append(input.read())
+input.close()
+
+input = open("./template/output_1_3.txt")
 text.append(input.read())
 input.close()
 
@@ -28,8 +37,10 @@ p = re.compile('cost:')
 for i in range(len(pre_tokens)):
     if p.match(pre_tokens[i]):
         predict.append(float(pre_tokens[i+1]))
-
-
+        
 select = np.arange(0, 1.1, 0.1)
-plt.plot(select, real[0], 'r--', select, predict, 'b--')
+plt.ylabel('CPU cycles per record')
+plt.xlabel('selectivity')
+plt.plot(select, real[0], 'g--', select, real[1], 'y--', select, real[2], 'r--', select, predict, 'b--')
+plt.legend(['1 && 2 && 3 && 4', '(1 & 2) && (3 && 4)', '1 & 2 & 3 & 4', 'optimizer choice'], loc='lower right')
 plt.show()

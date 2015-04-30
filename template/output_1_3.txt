@@ -1,0 +1,132 @@
+Loop start!
+Loop stop!
+Elapsed time: 0.420588017 seconds
+CPU Cycles:           1281344437 
+Instructions:         1501083991 
+IPC:                  1.171491
+Branch misses:        29132 
+Branch instructions:  100207049 
+Branch mispred. rate: 0.029072%
+
+overall selectivity = 0.000000000
+theoretical selectivity = 0.000000000
+Loop start!
+Loop stop!
+Elapsed time: 0.387122154 seconds
+CPU Cycles:           1181601042 
+Instructions:         1519425197 
+IPC:                  1.285904
+Branch misses:        83275 
+Branch instructions:  103176064 
+Branch mispred. rate: 0.080712%
+
+overall selectivity = 0.093784130
+theoretical selectivity = 0.100000000
+Loop start!
+Loop stop!
+Elapsed time: 0.407053947 seconds
+CPU Cycles:           1239973154 
+Instructions:         1539497591 
+IPC:                  1.241557
+Branch misses:        136394 
+Branch instructions:  106450292 
+Branch mispred. rate: 0.128129%
+
+overall selectivity = 0.193439860
+theoretical selectivity = 0.200000000
+Loop start!
+Loop stop!
+Elapsed time: 0.408455133 seconds
+CPU Cycles:           1244542629 
+Instructions:         1559769113 
+IPC:                  1.253287
+Branch misses:        184266 
+Branch instructions:  109762329 
+Branch mispred. rate: 0.167877%
+
+overall selectivity = 0.295502630
+theoretical selectivity = 0.299999999
+Loop start!
+Loop stop!
+Elapsed time: 0.444151163 seconds
+CPU Cycles:           1353657366 
+Instructions:         1579311320 
+IPC:                  1.166699
+Branch misses:        231619 
+Branch instructions:  112942410 
+Branch mispred. rate: 0.205077%
+
+overall selectivity = 0.393581590
+theoretical selectivity = 0.400000000
+Loop start!
+Loop stop!
+Elapsed time: 0.428965092 seconds
+CPU Cycles:           1311304528 
+Instructions:         1601892039 
+IPC:                  1.221602
+Branch misses:        286647 
+Branch instructions:  116558693 
+Branch mispred. rate: 0.245925%
+
+overall selectivity = 0.512777610
+theoretical selectivity = 0.499999999
+Loop start!
+Loop stop!
+Elapsed time: 0.466719866 seconds
+CPU Cycles:           1423686634 
+Instructions:         1619542941 
+IPC:                  1.137570
+Branch misses:        325211 
+Branch instructions:  119456644 
+Branch mispred. rate: 0.272242%
+
+overall selectivity = 0.598538480
+theoretical selectivity = 0.600000001
+Loop start!
+Loop stop!
+Elapsed time: 0.470499992 seconds
+CPU Cycles:           1434066944 
+Instructions:         1640288305 
+IPC:                  1.143802
+Branch misses:        380095 
+Branch instructions:  122830133 
+Branch mispred. rate: 0.309448%
+
+overall selectivity = 0.702208910
+theoretical selectivity = 0.699999999
+Loop start!
+Loop stop!
+Elapsed time: 0.491868019 seconds
+CPU Cycles:           1500352059 
+Instructions:         1657358493 
+IPC:                  1.104646
+Branch misses:        423313 
+Branch instructions:  125590394 
+Branch mispred. rate: 0.337058%
+
+overall selectivity = 0.788804190
+theoretical selectivity = 0.800000000
+Loop start!
+Loop stop!
+Elapsed time: 0.510549068 seconds
+CPU Cycles:           1554349683 
+Instructions:         1682318801 
+IPC:                  1.082330
+Branch misses:        486317 
+Branch instructions:  129682364 
+Branch mispred. rate: 0.375006%
+
+overall selectivity = 0.913941270
+theoretical selectivity = 0.899999998
+Loop start!
+Loop stop!
+Elapsed time: 1.249307871 seconds
+CPU Cycles:           3814983426 
+Instructions:         1700898409 
+IPC:                  0.445847
+Branch misses:        519076 
+Branch instructions:  132698751 
+Branch mispred. rate: 0.391169%
+
+overall selectivity = 1.000000000
+theoretical selectivity = 1.000000000

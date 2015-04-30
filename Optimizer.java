@@ -214,13 +214,17 @@ public class Optimizer {
         code.add(noBranchCode);
         int rm = getRightMost(plan);
         getComponents(code, plan, plan.length-1, rm, k);
-        code.set(0, "if(" + code.get(0) + "){\n");
+        if (code.get(0).length() != 0) {
+            code.set(0, "if(" + code.get(0) + "){\n");
+        }
         if (code.get(1).length() != 0) {
             code.set(1, "\tanswer[j] = i;\n\tj += (" + code.get(1) + ");\n");
         } else {
             code.set(1, "\tanswer[j++] = i;\n");
         }
-        code.add("}\n");
+        if (code.get(0).length() != 0) {
+            code.add("}\n");
+        }
         StringBuffer ret = new StringBuffer();
         for (String str: code) {
             ret.append(str);
@@ -232,18 +236,19 @@ public class Optimizer {
     // if the right most term has nobranch bit set, then the code has a nobranch section
     private static void getComponents(ArrayList<String> code, Record[] plan, int pos, int rm, int k) {
         // basic case: find all logical and term
+        if (pos == plan.length-1) {
+            String noBranch = getCodeFromIndex(rm, k);
+            code.set(1, noBranch);
+        }
         if (plan[pos].L == -1 && plan[pos].R == -1) {
-            String part = getCodeFromIndex(pos, k);
-            part = "(" + part + ")";
-            String ifCode = code.get(0);
-            ifCode += part;
-            code.set(0, ifCode);
-        } else {
-            if (pos == plan.length-1) {
-                String noBranch = getCodeFromIndex(rm, k);
-                code.set(1, noBranch);
+            if (pos != rm) {
+                String part = getCodeFromIndex(pos, k);
+                part = "(" + part + ")";
+                String ifCode = code.get(0);
+                ifCode += part;
+                code.set(0, ifCode);
             }
-
+        } else {
             getComponents(code, plan, plan[pos].L, rm, k);
             if (plan[pos].R != rm) {
                 String ifCode = code.get(0);

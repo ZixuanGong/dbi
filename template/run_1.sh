@@ -1,5 +1,5 @@
 # !bin/sh
-
+make
 > $2
 
 while read line; do

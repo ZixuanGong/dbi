@@ -490,7 +490,7 @@ main:
 	.loc 1 110 0
 	movl	$400000000, %edi
 	.loc 1 109 0
-	movq	%rax, %r12
+	movq	%rax, %r14
 .LVL40:
 	.loc 1 110 0
 	call	malloc
@@ -506,7 +506,7 @@ main:
 	.loc 1 112 0
 	movl	$400000000, %edi
 	.loc 1 111 0
-	movq	%rax, %r14
+	movq	%rax, %r13
 .LVL44:
 	.loc 1 112 0
 	call	malloc
@@ -522,7 +522,7 @@ main:
 	.loc 1 116 0
 	xorl	%edi, %edi
 	.loc 1 113 0
-	movq	%rax, %r13
+	movq	%rax, %r12
 .LVL48:
 	.loc 1 116 0
 	call	time
@@ -548,13 +548,13 @@ main:
 	leaq	9168(%rsp), %rdi
 	call	createData
 	.loc 1 126 0
-	movq	%r12, %rdi
+	movq	%r14, %rdi
 	call	createOffsets
 	.loc 1 127 0
 	movq	%rbp, %rdi
 	call	createOffsets
 	.loc 1 128 0
-	movq	%r14, %rdi
+	movq	%r13, %rdi
 	call	createOffsets
 	.loc 1 129 0
 	movq	%r15, %rdi
@@ -654,22 +654,22 @@ main:
 	.p2align 4,,10
 	.p2align 3
 .L24:
-	.loc 1 149 0
-	movslq	0(%rbp,%rax,4), %rcx
-	movslq	(%r12,%rax,4), %rdx
-	movzbl	3152(%rsp,%rcx), %ecx
-	testb	%cl, 144(%rsp,%rdx)
+	.loc 1 184 0
+	movslq	0(%rbp,%rax,4), %rdx
+	cmpb	$0, 3152(%rsp,%rdx)
 	je	.L23
-	.loc 1 150 0
+	.loc 1 185 0
 	movslq	%ebx, %rdx
-	.loc 1 151 0
+	.loc 1 186 0
 	movslq	(%r14,%rax,4), %rcx
-	.loc 1 150 0
-	movl	%eax, 0(%r13,%rdx,4)
-	.loc 1 151 0
-	movslq	(%r15,%rax,4), %rdx
-	movzbl	9168(%rsp,%rdx), %edx
-	andb	6160(%rsp,%rcx), %dl
+	.loc 1 185 0
+	movl	%eax, (%r12,%rdx,4)
+	.loc 1 186 0
+	movslq	0(%r13,%rax,4), %rdx
+	movzbl	6160(%rsp,%rdx), %edx
+	andb	144(%rsp,%rcx), %dl
+	movslq	(%r15,%rax,4), %rcx
+	andb	9168(%rsp,%rcx), %dl
 	movsbl	%dl, %edx
 	addl	%edx, %ebx
 .LVL63:
@@ -954,7 +954,7 @@ main:
 .LBB127:
 .LBB128:
 	.loc 2 98 0 discriminator 2
-	movl	0(%r13,%r8,4), %ecx
+	movl	(%r12,%r8,4), %ecx
 	movq	16(%rsp), %rdi
 	xorl	%eax, %eax
 	movl	$.LC25, %edx
@@ -974,19 +974,19 @@ main:
 	movq	16(%rsp), %rdi
 	call	fclose
 	.loc 1 229 0
-	movq	%r12, %rdi
+	movq	%r14, %rdi
 	call	free
 	.loc 1 230 0
 	movq	%rbp, %rdi
 	call	free
 	.loc 1 231 0
-	movq	%r14, %rdi
+	movq	%r13, %rdi
 	call	free
 	.loc 1 232 0
 	movq	%r15, %rdi
 	call	free
 	.loc 1 234 0
-	movq	%r13, %rdi
+	movq	%r12, %rdi
 	call	free
 	.loc 1 236 0
 	xorl	%eax, %eax
@@ -4161,19 +4161,19 @@ __PRETTY_FUNCTION__.4766:
 	.quad	.LVL41-1
 	.quad	.LVL87
 	.value	0x1
-	.byte	0x5c
+	.byte	0x5e
 	.quad	.LVL88
 	.quad	.LVL90
 	.value	0x1
-	.byte	0x5c
+	.byte	0x5e
 	.quad	.LVL97
 	.quad	.LVL100
 	.value	0x1
-	.byte	0x5c
+	.byte	0x5e
 	.quad	.LVL101
 	.quad	.LFE90
 	.value	0x1
-	.byte	0x5c
+	.byte	0x5e
 	.quad	0
 	.quad	0
 .LLST25:
@@ -4207,19 +4207,19 @@ __PRETTY_FUNCTION__.4766:
 	.quad	.LVL45-1
 	.quad	.LVL87
 	.value	0x1
-	.byte	0x5e
+	.byte	0x5d
 	.quad	.LVL88
 	.quad	.LVL90
 	.value	0x1
-	.byte	0x5e
+	.byte	0x5d
 	.quad	.LVL97
 	.quad	.LVL100
 	.value	0x1
-	.byte	0x5e
+	.byte	0x5d
 	.quad	.LVL101
 	.quad	.LFE90
 	.value	0x1
-	.byte	0x5e
+	.byte	0x5d
 	.quad	0
 	.quad	0
 .LLST27:
@@ -4253,19 +4253,19 @@ __PRETTY_FUNCTION__.4766:
 	.quad	.LVL49-1
 	.quad	.LVL87
 	.value	0x1
-	.byte	0x5d
+	.byte	0x5c
 	.quad	.LVL88
 	.quad	.LVL90
 	.value	0x1
-	.byte	0x5d
+	.byte	0x5c
 	.quad	.LVL97
 	.quad	.LVL100
 	.value	0x1
-	.byte	0x5d
+	.byte	0x5c
 	.quad	.LVL101
 	.quad	.LFE90
 	.value	0x1
-	.byte	0x5d
+	.byte	0x5c
 	.quad	0
 	.quad	0
 .LLST29:

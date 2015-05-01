@@ -6896,12 +6896,12 @@ int main(int argc, char * argv[]) {
 
 
   for(i = 0; i < 100000000; i++) {
+# 184 "branch_mispred.c"
+ if(t2[o2[i]]){
+  answer[j] = i;
+  j += t1[o1[i]] & t3[o3[i]] & t4[o4[i]];
+ }
 
-    if((t1[o1[i]] & t2[o2[i]])){
-      answer[j] = i;
-   j += (t3[o3[i]] & t4[o4[i]]);
-    }
-# 189 "branch_mispred.c"
   }
 
 

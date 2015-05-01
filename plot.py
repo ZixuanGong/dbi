@@ -7,11 +7,11 @@ text = []
 real = []
 predict = []
 
-input = open("./template/output_1_2.txt")
+input = open("./template/output_1_1.txt")
 text.append(input.read())
 input.close()
 
-input = open("./template/output_1_1.txt")
+input = open("./template/output_1_2.txt")
 text.append(input.read())
 input.close()
 
@@ -37,7 +37,7 @@ p = re.compile('cost:')
 for i in range(len(pre_tokens)):
     if p.match(pre_tokens[i]):
         predict.append(float(pre_tokens[i+1]))
-        
+
 select = np.arange(0, 1.1, 0.1)
 plt.ylabel('CPU cycles per record')
 plt.xlabel('selectivity')
